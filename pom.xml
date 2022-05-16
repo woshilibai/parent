@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.demo</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>parent</name>
+    <description>Demo project for Spring Boot</description>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>consumer</module>
+        <module>provider8091</module>
+        <module>provider8092</module>
+        <module>sentinel</module>
+        <module>gateway</module>
+        <module>skywalking-alarm1004</module>
+    </modules>
+    <properties>
+        <java.version>1.8</java.version>
+        <!-- springboot版本 -->
+        <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
+        <!-- Spring Cloud 版本 -->
+        <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
+        <!-- Spring Cloud Alibaba 版本 -->
+        <spring.cloud.alibaba.version>2.2.7.RELEASE</spring.cloud.alibaba.version>
+    </properties>
+
+    <!--版本依赖管理-->
+    <dependencyManagement>
+        <dependencies>
+            <!-- SpringBoot 版本管理器 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Spring Cloud 版本管理器 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Spring Cloud Alibaba 版本管理器 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.24</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <version>2.4.0</version>
+                <optional>true</optional><!-- 这个需要为 true 热部署才有效 -->
+            </dependency>
+
+            <!-- skywalking 日志模块 -->
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>8.8.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork><!-- 如果没有该配置，热部署devtools不会生效 -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
