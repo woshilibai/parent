@@ -18,4 +18,7 @@ public interface ProviderFeignService {
     // @RequestParam必须，否则请求参数丢失
     @PostMapping("/stock/decreaseStock")
     String decreaseStock(@RequestParam(value = "id") String id);
+
+    @PostMapping("/stock/updateStock")
+    void updateStock(@RequestParam(value = "id") Integer id, @RequestParam(value = "num") Integer num);
 }

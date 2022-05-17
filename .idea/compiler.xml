@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="provider8092" />
+        <module name="provider8091" />
+        <module name="gateway" />
+        <module name="sentinel" />
+        <module name="skywalking-alarm1004" />
+        <module name="skywalking-order" />
+        <module name="consumer" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="consumer" target="1.5" />
+      <module name="gateway" target="1.5" />
+      <module name="parent" target="1.5" />
+      <module name="provider8091" target="1.5" />
+      <module name="provider8092" target="1.5" />
+      <module name="sentinel" target="1.5" />
+      <module name="skywalking" target="1.5" />
+      <module name="skywalking-alarm1004" target="1.5" />
+      <module name="skywalking-order" target="1.8" />
+      <module name="skywalking-order8031" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="consumer" options="" />
+      <module name="gateway" options="" />
+      <module name="parent" options="" />
+      <module name="provider8092" options="" />
+      <module name="sentinel" options="" />
+      <module name="skywalking" options="" />
+      <module name="skywalking-alarm1004" options="" />
+      <module name="skywalking-order" options="-parameters" />
+      <module name="skywalking-order8031" options="" />
+    </option>
+  </component>
+</project>

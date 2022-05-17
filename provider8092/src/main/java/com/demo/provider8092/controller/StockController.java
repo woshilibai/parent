@@ -1,6 +1,9 @@
 package com.demo.provider8092.controller;
 
+import com.demo.provider8092.mapper.StockMapper;
+import com.demo.provider8092.model.Stock;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -15,9 +18,31 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class StockController {
 
+    @Autowired
+    StockMapper stockMapper;
+
     @PostMapping("/decreaseStock")
     public String decreaseStock(String id){
         log.info("库存服务8092-->商品id{}减少库存成功", id);
         return "8092减少库存成功";
+    }
+
+    /**
+     * 分布式事务测试，此时是RM角色
+     * @param id  商品id
+     * @param num  商品数量
+     * @return
+     */
+    @PostMapping("/updateStock")
+    public void updateStock(Integer id, Integer num){
+        Stock stock = new Stock();
+        stock.setProdId(id);
+        stock = stockMapper.selectOne(stock);
+        log.info("商品id：{}，下单前剩余库存为：{}",id, stock.getCurrStock());
+        stock.setCurrStock(stock.getCurrStock()-num);
+        log.info("商品id：{}，下单前剩余库存为：{}",id, stock.getCurrStock());
+        stockMapper.updateByPrimaryKey(stock);
+        //  模拟异常
+        int i=10/0;
     }
 }

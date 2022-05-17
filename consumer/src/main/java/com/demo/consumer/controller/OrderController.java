@@ -1,6 +1,10 @@
 package com.demo.consumer.controller;
 
+import com.alibaba.nacos.common.utils.RandomUtils;
+import com.demo.consumer.mapper.OrderMapper;
+import com.demo.consumer.model.Order;
 import com.demo.consumer.service.ProviderFeignService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
 
 /**
  * @Description: todo
@@ -29,6 +34,9 @@ public class OrderController {
 
     @Autowired
     ProviderFeignService providerFeignService;
+
+    @Autowired
+    OrderMapper orderMapper;
 
     @GetMapping("/add/{id}")
     public String addOrder(@PathVariable String id){
@@ -53,5 +61,27 @@ public class OrderController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 分布式事务测试，此时是TM角色
+     * @param id  商品id
+     * @param num  商品数量
+     * @return
+     */
+    @GlobalTransactional    //  该注解开启了分布式事务
+    @GetMapping("/save/{id}/{num}")
+    public void addOrder(@PathVariable Integer id, @PathVariable Integer num){
+
+        //  本地保存订单入库
+        Order order = new Order();
+        order.setId(RandomUtils.nextInt(100,10000));
+        order.setProdId(id);
+        order.setProdNum(num);
+        orderMapper.insert(order);
+
+        //  调用微服务stock，扣减库存
+        providerFeignService.updateStock(id, num);
+
     }
 }
